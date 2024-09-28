@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Simo672K/go-ascii/pkg/ascii"
 	"github.com/Simo672K/go-ascii/pkg/process"
 )
 
 func ASCII() {
-	file, err := os.Open("golang.png")
+	file, err := os.Open("img.png")
 	if err != nil {
 		panic("Could not open image")
 	}
@@ -23,5 +24,7 @@ func ASCII() {
 	}
 
 	img.ToGrayScale()
-	fmt.Println(img.GrayScaledPixelArray)
+	generatedASCIIArt := ascii.GenerateASCII(img)
+
+	fmt.Println(generatedASCIIArt)
 }

@@ -15,6 +15,8 @@ type Pixel struct {
 
 type Image struct {
 	ImgReader            io.Reader
+	Width                int
+	Height               int
 	NumberOfPixels       int
 	PixelArray           [][]Pixel
 	GrayScaledPixelArray [][]Pixel
@@ -29,12 +31,12 @@ func (img *Image) GetPixelArray() error {
 	}
 
 	bounds := decodedImg.Bounds()
-	width, height := bounds.Max.X, bounds.Max.Y
-	img.NumberOfPixels = width * height
+	img.Width, img.Height = bounds.Max.X, bounds.Max.Y
+	img.NumberOfPixels = img.Width * img.Height
 
-	for y := 0; y < height; y++ {
+	for y := 0; y < img.Height; y++ {
 		var row []Pixel
-		for x := 0; x < width; x++ {
+		for x := 0; x < img.Width; x++ {
 			pixelsData := *RGBA2Pixel(decodedImg.At(x, y).RGBA())
 			row = append(row, pixelsData)
 		}

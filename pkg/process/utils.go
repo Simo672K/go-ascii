@@ -5,5 +5,5 @@ func RGBA2Pixel(r, g, b, a uint32) *Pixel {
 }
 
 func CalculatePixelAvrgRGB(pixel Pixel) int {
-	return (pixel.R + pixel.G + pixel.B) / 3
+	return (pixel.R + pixel.G + pixel.B + pixel.A) / 4
 }
