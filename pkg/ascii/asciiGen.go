@@ -4,21 +4,14 @@ import (
 	"github.com/Simo672K/go-ascii/pkg/process"
 )
 
-const AsciiChars = ".,-_:;^*=#&@"
+// const AsciiChars = ".,-_:;^*=#&@"
 
-func GenerateASCII(img process.Image) string {
+func GenerateASCII(img process.Image, density int) string {
 	generatedAscii := ""
-	density := 5
 
 	for row := 0; row < img.Height; row += density {
 		for col := 0; col < img.Width; col += density {
-			avrg := 0
-			for i := 0; i < density && (row+i) < img.Height; i++ {
-				for j := 0; j < density && (col+j) < img.Width; j++ {
-					avrg += img.GrayScaledPixelArray[row+i][col+j].R
-				}
-			}
-			avrg /= density
+			avrg := CalculateAvrg(density, row, col, img)
 
 			switch {
 			case avrg > 220:
@@ -35,7 +28,9 @@ func GenerateASCII(img process.Image) string {
 				generatedAscii += ";"
 			case avrg > 50:
 				generatedAscii += "-"
-			case avrg > 20:
+			case avrg > 30:
+				generatedAscii += "¨"
+			case avrg > 10:
 				generatedAscii += "."
 			default:
 				generatedAscii += " "

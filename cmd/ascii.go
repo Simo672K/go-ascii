@@ -5,11 +5,14 @@ import (
 	"os"
 
 	"github.com/Simo672K/go-ascii/pkg/ascii"
+	"github.com/Simo672K/go-ascii/pkg/cli"
 	"github.com/Simo672K/go-ascii/pkg/process"
 )
 
 func ASCII() {
-	file, err := os.Open("img.png")
+	imagePath, density := cli.GetArgs()
+	fmt.Println(imagePath)
+	file, err := os.Open(imagePath)
 	if err != nil {
 		panic("Could not open image")
 	}
@@ -22,9 +25,8 @@ func ASCII() {
 	if err != nil {
 		panic("Failed to get image pixel array")
 	}
-
 	img.ToGrayScale()
-	generatedASCIIArt := ascii.GenerateASCII(img)
 
+	generatedASCIIArt := ascii.GenerateASCII(img, density)
 	fmt.Println(generatedASCIIArt)
 }
